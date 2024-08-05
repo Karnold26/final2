@@ -50,6 +50,7 @@ app.layout = html.Div([
                 placeholder='Select a report type'
             )
         ])
+
     ]),
     html.Div([  # TASK 2.3: Add a division for output display
         html.Div(id='output-container', className='chart-grid', style={'display': 'flex'})
@@ -132,8 +133,9 @@ return [
 # TASK 2.6: Create and display graphs for Yearly Report Statistics
  # Yearly Statistic Report Plots
     # Check for Yearly Statistics.                             
-if (input_year and selected_statistics=='Yearly Statistics') :
+elif (input_year and selected_statistics=='Yearly Statistics') :
         yearly_data = data[data['Year'] == input_year]
+
                               
 
                               
@@ -141,7 +143,9 @@ if (input_year and selected_statistics=='Yearly Statistics') :
         # grouping data for plotting.
         # Hint:Use the columns Year and Automobile_Sales.
 yas= data.groupby('Year')['Automobile_Sales'].mean().reset_index()
-Y_chart1 = dcc.Graph(yas,x='Year',y=Automobile_Sales)
+Y_chart1 = dcc.Graph(figure=px.line(yas,
+                                              x='Year',
+                                              y='Automobile_Sales',title="Yearly Average Automobile Sales"))
             
 # Plot 2 Total Monthly Automobile sales using line chart.
         # grouping data for plotting.
@@ -170,10 +174,10 @@ Y_chart4 = dcc.Graph(figure=px.pie(exp_data, values='Advertising_Expenditure', n
 
 
 #TASK 2.6: Returning the graphs for displaying Yearly data
-            return [
-                html.Div(className='chart-item', children=[html.Div(children=Y_chart1,html.Div(children=Y_chart2)],style={'display':'flex'}),
-                html.Div(className='chart-item', children=[html.Div(children=Y_chart3),html.Div(children=Y_chart4)],style={'display':'flex'})
-                ]
+return [
+        html.Div(className='chart-item', children=[html.Div(children=Y_chart1,html.Div(children=Y_chart2)],style={'display':'flex'}),
+        html.Div(className='chart-item', children=[html.Div(children=Y_chart3),html.Div(children=Y_chart4)],style={'display':'flex'})
+        ]
         
         
     else:
