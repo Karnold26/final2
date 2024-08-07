@@ -37,7 +37,7 @@ app.layout = html.Div([
         "Automobile Sales Statistics Dashboard",
         style={'textAlign': 'center', 'color': '#503D36', 'font-size': 24}
     ),
-    html.Div([  # TASK 2.2: Add two dropdown menus
+     # TASK 2.2: Add two dropdown menus
         html.Div([
             html.Label("Select Statistics:"),
             dcc.Dropdown(
@@ -51,18 +51,30 @@ app.layout = html.Div([
             )
         ])
 
-    ]),
+    ,
     html.Div([  # TASK 2.3: Add a division for output display
-        html.Div(id='output-container', className='chart-grid', style={'display': 'flex'})
+        html.Div(id='output-container', className='chart-grid', style={'display': 'flex'}),
     ])
 ])
 #TASK 2.4: Creating Callbacks
 # Define the callback function to update the input container based on the selected statistics
 @app.callback(
-    Output(component_id='Select-year', component_property='disabled'),
+    Output(component_id='select-year', component_property='disabled'),
     Input(component_id='dropdown-statistics',component_property='value'))
 
-
+def update_input_container(selected_statistics):
+    if selected_statistics =='Yearly Statistics': 
+        return False
+    else: 
+        return True
+ 
+#Callback for plotting
+# Define the callback function to update the input container based on the selected statistics
+@app.callback(
+    Output(component_id='output-container', component_property='children'),
+    [Input(component_id='dropdown-statistics', component_property='value'), 
+    Input(component_id='select-year', component_property='value')])
+ 
 def update_output_container(selected_statistics, input_year):
     if selected_statistics == 'Recession Period Statistics':
         # Filter the data for recession periods
